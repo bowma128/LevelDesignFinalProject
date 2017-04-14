@@ -19,13 +19,16 @@ public class CameraController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-
-        bool ghostIsAlive = false; //Once ghost mode exists, use this variable to follow the ghost.
+        
+        bool ghostIsAlive = GameObject.Find("Ghost") != null; //Once ghost mode exists, use this variable to follow the ghost.
 
         if (!ghostIsAlive)
         {
             transform.position = player.transform.position + offset;
+        } else
+        {
+            GameObject ghost = GameObject.Find("Ghost");
+            transform.position = ghost.transform.position + offset;
         }
 	}
 }

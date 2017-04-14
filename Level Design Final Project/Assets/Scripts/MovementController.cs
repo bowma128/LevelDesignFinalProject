@@ -13,9 +13,11 @@ public class MovementController : MonoBehaviour {
     private bool wasGrounded;
 
     public int maxJumpCount = 1; //Maximum amount of times a player can consecutively jump (1 for single jump, 2 for double jump)
-    public int jumpCount = 0; //Amount of times a player has consecutively jumped.
+    private int jumpCount = 0; //Amount of times a player has consecutively jumped.
 
     private float oldJump;
+
+    public bool movingEnabled = true; 
 
     Vector3 moveDirection = Vector3.zero;
     // Use this for initialization
@@ -25,6 +27,7 @@ public class MovementController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        
         CharacterController controller = GetComponent<CharacterController>();
         if (controller == null)
         {
@@ -44,6 +47,11 @@ public class MovementController : MonoBehaviour {
         }
         //Handle jumping.
         float jump = Input.GetAxis("Jump");
+        if (!movingEnabled)
+        {
+            //If the player isn't allowed to move, cancel the jump.
+            jump = 0;
+        }
         if (jump==1f && oldJump != 1f && jumpCount<maxJumpCount)
         {
             //If the player has pressed the jump button and can jump, jump.
@@ -69,8 +77,12 @@ public class MovementController : MonoBehaviour {
 
         //Get left and right movement.
         float horiz = Input.GetAxis("Horizontal");
+        if (!movingEnabled)
+        {
+            //If the player isn't allowed to move, cancel the movement.
+            horiz = 0f;
+        }
         moveDirection.x = horiz * moveSpeed;
-
 
         controller.Move(moveDirection * Time.deltaTime);
         oldJump = jump;
