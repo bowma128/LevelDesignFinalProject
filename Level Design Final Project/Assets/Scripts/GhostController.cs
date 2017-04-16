@@ -12,8 +12,15 @@ public class GhostController : MonoBehaviour {
     public float defaultTime = 10f;
     public float timeLeft = 0;
 
+    public GameManager manager;
+
 	// Use this for initialization
 	void Start () {
+        manager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        if (manager == null)
+        {
+            Debug.LogWarning("No GameManager found!");
+        }
 		if (transform.name == "Player")
         {
             //If this is the player, set isGhost to false.
@@ -38,9 +45,10 @@ public class GhostController : MonoBehaviour {
         {
             //If this is a ghost, decrement it's timer.
             timeLeft -= Time.deltaTime;
-            Debug.Log(timeLeft);
+            //Debug.Log(timeLeft);
             if (timeLeft <= 0f)
             {
+                manager.updateObjects(false);
                 //If the timer is out, kill the ghost.
                 killGhost();
             }
@@ -49,7 +57,7 @@ public class GhostController : MonoBehaviour {
             //If this is not a ghost and the player presses the ghost button, create a ghost prefab.
             if (Input.GetAxis("Ghost") == 1f && GameObject.Find("Ghost") == null)
             {
-                Debug.Log("Pressed!");
+                manager.updateObjects(true);
                 GameObject ghost = (GameObject)Instantiate(Resources.Load("Ghost"));
                 ghost.transform.name = "Ghost";
                 ghost.transform.position = transform.position + new Vector3(0, 2, 0);
