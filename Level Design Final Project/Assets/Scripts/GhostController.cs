@@ -60,13 +60,17 @@ public class GhostController : MonoBehaviour {
                 manager.updateObjects(true);
                 GameObject ghost = (GameObject)Instantiate(Resources.Load("Ghost"));
                 ghost.transform.name = "Ghost";
-                ghost.transform.position = transform.position + new Vector3(0, 2, 0);
+                ghost.transform.position = transform.position;
+                this.gameObject.GetComponent<BoxCollider>().enabled = false;
+                this.gameObject.GetComponent<CharacterController>().enabled = false;
             }
         }
 	}
 
     void killGhost()
     {
+        player.GetComponent<CharacterController>().enabled = true;
+        player.GetComponent<BoxCollider>().enabled = true;
         player.GetComponent<MovementController>().movingEnabled = true;
         Destroy(this.gameObject);
     }
