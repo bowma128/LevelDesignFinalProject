@@ -13,13 +13,18 @@ public class GhostController : MonoBehaviour {
     public float timeLeft = 0;
 
     public GameManager manager;
-
+    public FlashController flash;
 	// Use this for initialization
 	void Start () {
         manager = GameObject.Find("GameManager").GetComponent<GameManager>();
         if (manager == null)
         {
             Debug.LogWarning("No GameManager found!");
+        }
+        flash = GameObject.Find("Flash Screen").GetComponent<FlashController>();
+        if (flash == null)
+        {
+            Debug.LogWarning("No Flash Screen Found!");
         }
 		if (transform.name == "Player")
         {
@@ -57,6 +62,7 @@ public class GhostController : MonoBehaviour {
             //If this is not a ghost and the player presses the ghost button, create a ghost prefab.
             if (Input.GetAxis("Ghost") == 1f && GameObject.Find("Ghost") == null)
             {
+                flash.flash();
                 manager.updateObjects(true);
                 GameObject ghost = (GameObject)Instantiate(Resources.Load("Ghost"));
                 ghost.transform.name = "Ghost";
@@ -69,6 +75,7 @@ public class GhostController : MonoBehaviour {
 
     void killGhost()
     {
+        flash.flash();
         player.GetComponent<CharacterController>().enabled = true;
         player.GetComponent<BoxCollider>().enabled = true;
         player.GetComponent<MovementController>().movingEnabled = true;

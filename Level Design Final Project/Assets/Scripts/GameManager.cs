@@ -9,6 +9,12 @@ public class GameManager : MonoBehaviour {
 
     public Camera mainCamera;
 
+    public FlashController flash;
+
+    public bool is_ghostMode = false;
+
+    private bool waitingToSwitch = false;
+
 	// Use this for initialization
 	void Start () {
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
@@ -16,15 +22,31 @@ public class GameManager : MonoBehaviour {
         {
             Debug.LogWarning("No camera found in scene!");
         }
+        flash = GameObject.Find("Flash Screen").GetComponent<FlashController>();
+        if (flash == null)
+        {
+            Debug.LogWarning("No flash found!");
+        }
         //Set up all colliders and renderers.
         updateObjects(false);
 	}
-	
 	// Update is called once per frame
 	void Update () {
+        if (flash.screenCovered && waitingToSwitch)
+        {
+            Debug.Log("Going");
+            waitingToSwitch = false;
+            internal_updateObjects(is_ghostMode);
+        }
 	}
 
     public void updateObjects(bool ghostMode)
+    {
+        is_ghostMode = ghostMode;
+        waitingToSwitch = true;
+    }
+
+    public void internal_updateObjects(bool ghostMode)
     {
         if (ghostMode)
         {
