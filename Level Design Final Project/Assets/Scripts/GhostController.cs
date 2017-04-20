@@ -12,10 +12,13 @@ public class GhostController : MonoBehaviour {
     public float defaultTime = 10f;
     public float timeLeft = 0;
 
+    public float oldControlValue = 1f;
+
     public GameManager manager;
     public FlashController flash;
 	// Use this for initialization
 	void Start () {
+        oldControlValue = 1f;
         manager = GameObject.Find("GameManager").GetComponent<GameManager>();
         if (manager == null)
         {
@@ -33,7 +36,6 @@ public class GhostController : MonoBehaviour {
             isGhost = false;
         } else
         {
-            Debug.Log("Ghost created!");
             //If this is not the player, assume it's the ghost.
             isGhost = true;
             //Find the player and get it's default time value for this ghost's life.
@@ -46,6 +48,11 @@ public class GhostController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        bool risingEdge = false;
+        if (Input.GetAxis("Ghost")==1f && oldControlValue == 0)
+        {
+            risingEdge = true;
+        }
         if (isGhost)
         {
             //If this is a ghost, decrement it's timer.
@@ -57,10 +64,15 @@ public class GhostController : MonoBehaviour {
                 //If the timer is out, kill the ghost.
                 killGhost();
             }
+            if (risingEdge)
+            {
+                manager.updateObjects(false);
+                killGhost();
+            }
         } else
         {
             //If this is not a ghost and the player presses the ghost button, create a ghost prefab.
-            if (Input.GetAxis("Ghost") == 1f && GameObject.Find("Ghost") == null)
+            if (risingEdge && GameObject.Find("Ghost") == null)
             {
                 flash.flash();
                 manager.updateObjects(true);
@@ -68,15 +80,20 @@ public class GhostController : MonoBehaviour {
                 ghost.transform.name = "Ghost";
                 ghost.transform.position = transform.position;
                 this.gameObject.GetComponent<BoxCollider>().enabled = false;
-                this.gameObject.GetComponent<CharacterController>().enabled = false;
+                Physics.IgnoreCollision(ghost.GetComponent<Collider>(), this.GetComponent<Collider>());
+                //this.gameObject.GetComponent<CharacterController>().enabled = false;
+                this.gameObject.GetComponent<CharacterController>().detectCollisions = false;
+                
             }
         }
+        oldControlValue = Input.GetAxis("Ghost");
 	}
 
     void killGhost()
     {
         flash.flash();
-        player.GetComponent<CharacterController>().enabled = true;
+        //player.GetComponent<CharacterController>().enabled = true;
+        player.GetComponent<CharacterController>().detectCollisions = true;
         player.GetComponent<BoxCollider>().enabled = true;
         player.GetComponent<MovementController>().movingEnabled = true;
         Destroy(this.gameObject);

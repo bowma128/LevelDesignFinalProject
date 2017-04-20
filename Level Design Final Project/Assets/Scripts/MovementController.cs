@@ -83,11 +83,7 @@ public class MovementController : MonoBehaviour {
             horiz = 0f;
         }
         moveDirection.x = horiz * moveSpeed;
-        if (movingEnabled)
-        {
-            controller.Move(moveDirection * Time.deltaTime); //Unity throws errors if you try to move something with
-                                                             //   a disabled character controller, so just check.
-        }
+        controller.Move(moveDirection * Time.deltaTime);
         oldJump = jump;
         wasJumping = isJumping;
         wasGrounded = controller.isGrounded;

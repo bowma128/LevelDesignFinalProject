@@ -34,7 +34,6 @@ public class GameManager : MonoBehaviour {
 	void Update () {
         if (flash.screenCovered && waitingToSwitch)
         {
-            Debug.Log("Going");
             waitingToSwitch = false;
             internal_updateObjects(is_ghostMode);
         }

@@ -7,6 +7,8 @@ public class CameraController : MonoBehaviour {
     private GameObject player;
     public Vector3 offset = new Vector3(0,0,-10);
 
+    public bool changePerspective = false;
+
     private float size;
 
 	// Use this for initialization
@@ -28,14 +30,20 @@ public class CameraController : MonoBehaviour {
         {
             //this.GetComponent<Camera>().orthographicSize = size;
             transform.position = player.transform.position + offset;
-            this.GetComponent<Camera>().orthographic = true; //Uncomment this line and the one below to be in perspective rendering in ghost mode.
+            if (changePerspective)
+            {
+                this.GetComponent<Camera>().orthographic = true; //Uncomment this line and the one below to be in perspective rendering in ghost mode.
+            }
         } else
         {
             GameObject ghost = GameObject.Find("Ghost");
             Vector3 camVector = ghost.transform.position;//(ghost.transform.position + player.transform.position) * .5f;
             //this.GetComponent<Camera>().orthographicSize = 8;
             transform.position = camVector + offset;
-            this.GetComponent<Camera>().orthographic = false;
+            if (changePerspective)
+            {
+                this.GetComponent<Camera>().orthographic = false;
+            }
         }
 	}
 }

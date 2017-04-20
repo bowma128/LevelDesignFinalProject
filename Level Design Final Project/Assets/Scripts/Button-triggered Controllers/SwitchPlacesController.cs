@@ -25,12 +25,12 @@ public class SwitchPlacesController : MonoBehaviour {
         if (!wasActive && logic.active)
         {
             active = true;
-            transform.position = secondPosition;
+            transform.localPosition = secondPosition;
         }
         if (wasActive && !logic.active)
         {
             active = false;
-            transform.position = firstPosition;
+            transform.localPosition = firstPosition;
         }
         wasActive = logic.active;
 	}
