@@ -12,7 +12,6 @@ public class GameManager : MonoBehaviour {
     public FlashController flash;
 
     public bool is_ghostMode = false;
-
     private bool waitingToSwitch = false;
 
 	// Use this for initialization

@@ -79,10 +79,6 @@ public class GhostController : MonoBehaviour {
                 GameObject ghost = (GameObject)Instantiate(Resources.Load("Ghost"));
                 ghost.transform.name = "Ghost";
                 ghost.transform.position = transform.position;
-                this.gameObject.GetComponent<BoxCollider>().enabled = false;
-                Physics.IgnoreCollision(ghost.GetComponent<Collider>(), this.GetComponent<Collider>());
-                //this.gameObject.GetComponent<CharacterController>().enabled = false;
-                this.gameObject.GetComponent<CharacterController>().detectCollisions = false;
                 
             }
         }
@@ -92,9 +88,6 @@ public class GhostController : MonoBehaviour {
     void killGhost()
     {
         flash.flash();
-        //player.GetComponent<CharacterController>().enabled = true;
-        player.GetComponent<CharacterController>().detectCollisions = true;
-        player.GetComponent<BoxCollider>().enabled = true;
         player.GetComponent<MovementController>().movingEnabled = true;
         Destroy(this.gameObject);
     }
