@@ -21,7 +21,6 @@ public class ButtonController : MonoBehaviour {
     public Material inactiveMaterial;
     public Material activeMaterial;
 
-    public GameObject inField;
 
 
 	// Use this for initialization
@@ -85,28 +84,16 @@ public class ButtonController : MonoBehaviour {
     }
     void OnTriggerEnter(Collider col)
     {
-        if (col.tag=="Player" && inField == null)
+        if (col.tag=="Player")
         {
-            playerInField = true;
-            inField = col.gameObject;
-        }
-    }
-
-    void OnTriggerStay(Collider col)
-    {
-        if (col.tag=="Player" && inField == col.gameObject)
-        {
-            Debug.Log("Yay");
             playerInField = true;
         }
     }
 
     void OnTriggerExit(Collider col)
     {
-        if (col.tag=="Player" && inField == col.gameObject)
+        if (col.tag=="Player")
         {
-            Debug.Log(col.gameObject.name);
-            inField = null;
             playerInField = false;
         }
     }

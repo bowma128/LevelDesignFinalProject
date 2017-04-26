@@ -9,9 +9,6 @@ public class LogicController : MonoBehaviour {
     public ButtonController button1;
     public ButtonController button2;
 
-
-    public bool stayActive;
-
     public bool active;
 	// Use this for initialization
 	void Start () {
@@ -35,11 +32,6 @@ public class LogicController : MonoBehaviour {
         } else if (gateType == type.and)
         {
             active = button1.active && button2.active;
-            if (stayActive && active)
-            {
-                button1.type = buttonType.Permanent;
-                button2.type = buttonType.Permanent;
-            }
         } else if (gateType == type.or)
         {
             active = button1.active || button2.active;
