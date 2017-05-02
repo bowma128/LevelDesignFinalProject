@@ -14,6 +14,8 @@ public class GhostController : MonoBehaviour {
 
     public float oldControlValue = 1f;
 
+    public Vector3 offset = new Vector3(0,2,0);
+
     public GameManager manager;
     public FlashController flash;
 	// Use this for initialization
@@ -78,23 +80,16 @@ public class GhostController : MonoBehaviour {
                 manager.updateObjects(true);
                 GameObject ghost = (GameObject)Instantiate(Resources.Load("Ghost"));
                 ghost.transform.name = "Ghost";
-                ghost.transform.position = transform.position;
-                this.gameObject.GetComponent<BoxCollider>().enabled = false;
-                Physics.IgnoreCollision(ghost.GetComponent<Collider>(), this.GetComponent<Collider>());
-                //this.gameObject.GetComponent<CharacterController>().enabled = false;
-                this.gameObject.GetComponent<CharacterController>().detectCollisions = false;
+                ghost.transform.position = transform.position + offset;
                 
             }
         }
         oldControlValue = Input.GetAxis("Ghost");
 	}
 
-    void killGhost()
+    public void killGhost()
     {
         flash.flash();
-        //player.GetComponent<CharacterController>().enabled = true;
-        player.GetComponent<CharacterController>().detectCollisions = true;
-        player.GetComponent<BoxCollider>().enabled = true;
         player.GetComponent<MovementController>().movingEnabled = true;
         Destroy(this.gameObject);
     }

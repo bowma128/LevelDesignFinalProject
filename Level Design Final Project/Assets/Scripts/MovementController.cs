@@ -19,7 +19,9 @@ public class MovementController : MonoBehaviour {
 
     public bool movingEnabled = true; 
 
-    Vector3 moveDirection = Vector3.zero;
+    public Vector3 moveDirection = Vector3.zero;
+
+    public Vector3 moveOffset = Vector3.zero;
     // Use this for initialization
     void Start () {
 		
@@ -83,7 +85,8 @@ public class MovementController : MonoBehaviour {
             horiz = 0f;
         }
         moveDirection.x = horiz * moveSpeed;
-        controller.Move(moveDirection * Time.deltaTime);
+        controller.Move((moveDirection * Time.deltaTime) + moveOffset);
+        //moveOffset = Vector3.zero;
         oldJump = jump;
         wasJumping = isJumping;
         wasGrounded = controller.isGrounded;

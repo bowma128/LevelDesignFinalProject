@@ -15,6 +15,10 @@ public class GameManager : MonoBehaviour {
 
     private bool waitingToSwitch = false;
 
+    public Vector3 current_checkpoint;
+
+    public int lives;
+
 	// Use this for initialization
 	void Start () {
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
@@ -27,6 +31,9 @@ public class GameManager : MonoBehaviour {
         {
             Debug.LogWarning("No flash found!");
         }
+
+        //set the current checkpoint to wherever the player is at the start.
+        current_checkpoint = GameObject.Find("Player").transform.position;
         //Set up all colliders and renderers.
         updateObjects(false);
 	}
@@ -43,6 +50,11 @@ public class GameManager : MonoBehaviour {
     {
         is_ghostMode = ghostMode;
         waitingToSwitch = true;
+    }
+
+    public void loseLife()
+    {
+        lives--;
     }
 
     public void internal_updateObjects(bool ghostMode)
