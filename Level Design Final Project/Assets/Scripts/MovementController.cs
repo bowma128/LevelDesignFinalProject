@@ -8,7 +8,7 @@ public class MovementController : MonoBehaviour {
     public float jumpSpeed = 8f;
     public float gravity = 8f;
 
-    private bool isJumping;
+    public bool isJumping;
     private bool wasJumping;
     private bool wasGrounded;
 
@@ -65,7 +65,7 @@ public class MovementController : MonoBehaviour {
         //This activates right as the player lands at all.
         if (controller.isGrounded && !wasGrounded)
         {
-            Debug.Log("Landed");
+            moveOffset = Vector3.zero;
             isJumping = false;
             jumpCount = 0;
         }
@@ -85,10 +85,11 @@ public class MovementController : MonoBehaviour {
             horiz = 0f;
         }
         moveDirection.x = horiz * moveSpeed;
+        wasGrounded = controller.isGrounded;
         controller.Move((moveDirection * Time.deltaTime) + moveOffset);
         //moveOffset = Vector3.zero;
         oldJump = jump;
         wasJumping = isJumping;
-        wasGrounded = controller.isGrounded;
+        
 	}
 }

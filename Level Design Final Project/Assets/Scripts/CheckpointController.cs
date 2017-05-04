@@ -6,6 +6,8 @@ public class CheckpointController : MonoBehaviour {
 
     public bool activated = false;
 
+    public Vector3 offset = new Vector3(0, 0, 1);
+
     public GameManager gm;
 	// Use this for initialization
 	void Start () {
@@ -24,7 +26,7 @@ public class CheckpointController : MonoBehaviour {
             if (!activated)
             {
                 activated = true;
-                gm.current_checkpoint = transform.position;
+                gm.current_checkpoint = transform.position + offset;
             }
         }
     }

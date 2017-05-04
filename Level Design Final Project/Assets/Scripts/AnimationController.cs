@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AnimationController : MonoBehaviour {
 
-    Animator animator;
+    public Animator animator;
 
     public MovementController mc;
 
@@ -23,13 +23,29 @@ public class AnimationController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+        if (mc.isJumping)
+        {
+            animator.SetBool("isJumping", true);
+        } else
+        {
+            animator.SetBool("isJumping", false);
+        }
         if (mc.moveDirection.x != 0)
         {
             is_running = true;
+            animator.SetBool("isRunning", true);
+            if (mc.moveDirection.x>0)
+            {
+                //The player is moving right
+                transform.eulerAngles = new Vector3(0, 101, 0);
+            } else
+            {
+                transform.eulerAngles = new Vector3(0, 281, 0);
+            }
         } else
         {
             is_running = false;
+            animator.SetBool("isRunning", false);
         }
         if (is_running && !was_running)
         {

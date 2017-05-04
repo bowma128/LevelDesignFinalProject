@@ -36,7 +36,10 @@ public class GameManager : MonoBehaviour {
         current_checkpoint = GameObject.Find("Player").transform.position;
         //Set up all colliders and renderers.
         updateObjects(false);
-	}
+        Physics.IgnoreLayerCollision(11, 9, true);
+        Physics.IgnoreLayerCollision(8, 12, true);
+        Physics.IgnoreLayerCollision(11, 12, true);
+    }
 	// Update is called once per frame
 	void Update () {
         if (flash.screenCovered && waitingToSwitch)
@@ -68,7 +71,7 @@ public class GameManager : MonoBehaviour {
             mainCamera.cullingMask = -513; //This will only render objects in the real world.
         }
         
-        foreach (GameObject g in GameObject.FindObjectsOfType(typeof(GameObject)))
+        /*foreach (GameObject g in GameObject.FindObjectsOfType(typeof(GameObject)))
         {
             if (ghostMode)
             {
@@ -79,14 +82,14 @@ public class GameManager : MonoBehaviour {
                     BoxCollider coll = g.GetComponent<BoxCollider>();
                     if (coll != null)
                     {
-                        coll.enabled = true;
+                        //coll.enabled = true;
                     }
                 } else if (g.layer == realWorldLayer)
                 {
                     BoxCollider coll = g.GetComponent<BoxCollider>();
                     if (coll != null)
                     {
-                        coll.enabled = false;
+                        //coll.enabled = false;
                     }
                 }
             } else
@@ -97,7 +100,7 @@ public class GameManager : MonoBehaviour {
                     BoxCollider coll = g.GetComponent<BoxCollider>();
                     if (coll != null)
                     {
-                        coll.enabled = false;
+                        //coll.enabled = false;
                     }
                 }
                 else if (g.layer == realWorldLayer)
@@ -105,10 +108,10 @@ public class GameManager : MonoBehaviour {
                     BoxCollider coll = g.GetComponent<BoxCollider>();
                     if (coll != null)
                     {
-                        coll.enabled = true;
+                        //coll.enabled = true;
                     }
                 }
             }
-        }
+        }*/
     }
 }
