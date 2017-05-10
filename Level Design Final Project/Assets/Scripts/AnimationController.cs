@@ -23,6 +23,8 @@ public class AnimationController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+        transform.localPosition =  new Vector3(0, transform.localPosition.y, 0);
         if (mc.isJumping)
         {
             animator.SetBool("isJumping", true);
