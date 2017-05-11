@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        Time.timeScale = 1;
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
         if (mainCamera == null)
         {

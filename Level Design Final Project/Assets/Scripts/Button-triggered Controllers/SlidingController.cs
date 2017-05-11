@@ -43,6 +43,12 @@ public class SlidingController : MonoBehaviour
     {
         Vector3 oldPosition = transform.position;
         // If true, move platform to specified positions
+        try
+        {
+            bool a = logic1.active;
+        } catch {
+            Debug.LogWarning("No logic object set for " + transform.name);
+        }
         if (logic1.active)
         {
             // Turn on switch when I reach first point

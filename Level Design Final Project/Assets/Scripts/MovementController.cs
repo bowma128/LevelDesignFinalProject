@@ -86,7 +86,10 @@ public class MovementController : MonoBehaviour {
         }
         moveDirection.x = horiz * moveSpeed;
         wasGrounded = controller.isGrounded;
-        controller.Move((moveDirection * Time.deltaTime) + moveOffset);
+        if (Time.timeScale != 0)
+        {
+            controller.Move((moveDirection * Time.deltaTime) + moveOffset);
+        }
         //moveOffset = Vector3.zero;
         oldJump = jump;
         wasJumping = isJumping;
